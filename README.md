@@ -1,2 +1,1 @@
-# go-samples
-Examples using GoLang
+# Examples using GoLang
