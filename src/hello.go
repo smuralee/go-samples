@@ -14,4 +14,7 @@ func main() {
 	fmt.Println("Boolean - true or false : ", isValid || isInvalid)
 	fmt.Println("Boolean - negation true : ", !isValid)
 
+	const n = 500
+	const d = 3e20/n
+	fmt.Println(d)
 }
