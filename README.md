@@ -1,1 +1,3 @@
-# Examples using GoLang
+# Introduction
+
+CLI tool for interaction with AWS APIs
