@@ -94,7 +94,7 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 		if book.Id == id {
 			fmt.Println("Match found for a book update")
 			Books = append(Books[:index], Books[index+1:]...)
-			Books = append(Books[:index], updatedBook)
+			Books = append(Books, updatedBook)
 			encodeErr := json.NewEncoder(w).Encode(updatedBook)
 			if encodeErr != nil {
 				panic(encodeErr)
@@ -116,7 +116,7 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 		if book.Id == id {
 			fmt.Println("Match found for a book delete")
 			Books = append(Books[:index], Books[index+1:]...)
-			break
+			return
 		}
 	}
 }
@@ -124,11 +124,11 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", welcome)
-	myRouter.HandleFunc("/books", getAllBooks)
-	myRouter.HandleFunc("/books/{id}", getBookById)
-	myRouter.HandleFunc("/book", createBook).Methods("POST")
-	myRouter.HandleFunc("/book/{id}", updateBook).Methods("PUT")
-	myRouter.HandleFunc("/book/{id}", deleteBook).Methods("DELETE")
+	myRouter.HandleFunc("/books", getAllBooks).Methods("GET")
+	myRouter.HandleFunc("/books/{id}", getBookById).Methods("GET")
+	myRouter.HandleFunc("/books", createBook).Methods("POST")
+	myRouter.HandleFunc("/books/{id}", updateBook).Methods("PUT")
+	myRouter.HandleFunc("/books/{id}", deleteBook).Methods("DELETE")
 
 	log.Fatal(http.ListenAndServe(":9000", myRouter))
 }
