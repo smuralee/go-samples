@@ -22,13 +22,13 @@ func welcome(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%d Bytes written.\n", bytes)
+	fmt.Printf("%d Invoked the welcome page, bytes written...\n", bytes)
 }
 
 func getAllBooks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	fmt.Println("Fetch all books")
+	fmt.Printf("Fetching all the books...\n")
 
 	err := json.NewEncoder(w).Encode(Books)
 	if err != nil {
@@ -39,10 +39,10 @@ func getAllBooks(w http.ResponseWriter, r *http.Request) {
 func getBookById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	fmt.Println("Fetch book by Id")
-
 	vars := mux.Vars(r)
 	id := vars["id"]
+
+	fmt.Printf("Fetching a book by id - %s ...\n", id)
 
 	for _, book := range Books {
 		if book.Id == id {
@@ -57,7 +57,7 @@ func getBookById(w http.ResponseWriter, r *http.Request) {
 func createBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	fmt.Println("Add a book")
+	fmt.Printf("Adding a book...\n")
 
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	var book Book
@@ -77,10 +77,10 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 func updateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	fmt.Println("Update a book")
-
 	vars := mux.Vars(r)
 	id := vars["id"]
+
+	fmt.Printf("Updating a book using the id - %s ...\n", id)
 
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	var updatedBook Book
@@ -92,7 +92,7 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 
 	for index, book := range Books {
 		if book.Id == id {
-			fmt.Println("Match found for a book update")
+			fmt.Printf("Match found for a book update, updating...\n")
 			Books = append(Books[:index], Books[index+1:]...)
 			Books = append(Books, updatedBook)
 			encodeErr := json.NewEncoder(w).Encode(updatedBook)
@@ -107,10 +107,10 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 func deleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	fmt.Println("Delete a book")
-
 	vars := mux.Vars(r)
 	id := vars["id"]
+
+	fmt.Printf("Deleting a book by id - %s ...\n", id)
 
 	for index, book := range Books {
 		if book.Id == id {
