@@ -28,6 +28,8 @@ func welcome(w http.ResponseWriter, r *http.Request) {
 func getAllBooks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	fmt.Println("Fetch all books")
+
 	err := json.NewEncoder(w).Encode(Books)
 	if err != nil {
 		panic(err)
@@ -36,6 +38,8 @@ func getAllBooks(w http.ResponseWriter, r *http.Request) {
 
 func getBookById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	fmt.Println("Fetch book by Id")
 
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -52,6 +56,8 @@ func getBookById(w http.ResponseWriter, r *http.Request) {
 
 func createBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	fmt.Println("Add a book")
 
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	var book Book
@@ -71,6 +77,8 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 func updateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	fmt.Println("Update a book")
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -84,6 +92,7 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 
 	for index, book := range Books {
 		if book.Id == id {
+			fmt.Println("Match found for a book update")
 			Books = append(Books[:index], Books[index+1:]...)
 			Books = append(Books[:index], updatedBook)
 			encodeErr := json.NewEncoder(w).Encode(updatedBook)
@@ -96,11 +105,16 @@ func updateBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteBook(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	fmt.Println("Delete a book")
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
 	for index, book := range Books {
 		if book.Id == id {
+			fmt.Println("Match found for a book delete")
 			Books = append(Books[:index], Books[index+1:]...)
 			break
 		}
@@ -112,9 +126,9 @@ func handleRequests() {
 	myRouter.HandleFunc("/", welcome)
 	myRouter.HandleFunc("/books", getAllBooks)
 	myRouter.HandleFunc("/books/{id}", getBookById)
-	myRouter.HandleFunc("/books", createBook).Methods("POST")
-	myRouter.HandleFunc("/books/{id}", updateBook).Methods("PUT")
-	myRouter.HandleFunc("/books/{id}", deleteBook).Methods("DELETE")
+	myRouter.HandleFunc("/book", createBook).Methods("POST")
+	myRouter.HandleFunc("/book/{id}", updateBook).Methods("PUT")
+	myRouter.HandleFunc("/book/{id}", deleteBook).Methods("DELETE")
 
 	log.Fatal(http.ListenAndServe(":9000", myRouter))
 }
