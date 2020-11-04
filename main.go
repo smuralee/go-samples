@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 type Book struct {
@@ -15,14 +16,27 @@ type Book struct {
 	Author string `json:"Author"`
 }
 
+type FixedResponse struct {
+	Status        string `json:"Status"`
+	RemoteAddress string `json:"RemoteAddr"`
+	Hostname      string `json:"Hostname"`
+}
+
 var Books []Book
 
+var response FixedResponse
+
 func welcome(w http.ResponseWriter, r *http.Request) {
-	bytes, err := fmt.Fprintf(w, "Welcome to the Library!")
+	w.Header().Set("Content-Type", "application/json")
+
+	response.Status = "Success"
+	response.RemoteAddress = r.RemoteAddr
+	response.Hostname, _ = os.Hostname()
+
+	err := json.NewEncoder(w).Encode(response)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%d Invoked the welcome page, bytes written...\n", bytes)
 }
 
 func getAllBooks(w http.ResponseWriter, r *http.Request) {
