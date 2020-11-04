@@ -1,4 +1,4 @@
-module github.com/smuralee/project-svadhyay
+module github.com/smuralee/books-api
 
 go 1.15
 
