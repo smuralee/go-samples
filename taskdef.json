@@ -1,33 +1,35 @@
 {
   "containerDefinitions": [
     {
-      "name": "TASK_FAMILY",
+      "name": "books",
       "image": "REPOSITORY_URI:IMAGE_TAG",
       "portMappings": [
         {
-          "containerPort": 8080,
+          "containerPort": 9000,
           "protocol": "tcp"
         }
       ],
       "essential": true,
       "dockerLabels": {
-        "name": "TASK_FAMILY"
+        "name": "books"
       },
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/TASK_FAMILY",
+          "awslogs-group": "/ecs/books",
           "awslogs-region": "AWS_REGION",
-          "awslogs-stream-prefix": "TASK_FAMILY"
+          "awslogs-stream-prefix": "books"
         }
       }
     }
   ],
   "taskRoleArn": "TASK_EXECUTION_ARN",
   "executionRoleArn": "TASK_EXECUTION_ARN",
-  "family": "TASK_FAMILY",
+  "family": "books",
   "networkMode": "awsvpc",
-  "requiresCompatibilities": ["FARGATE"],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
   "cpu": "256",
   "memory": "1024"
 }

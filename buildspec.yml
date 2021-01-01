@@ -1,9 +1,16 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    DOCKER_HUB_USERNAME: "$DOCKER_HUB_SECRET_ARN:username"
+    DOCKER_HUB_PASSWORD: "$DOCKER_HUB_SECRET_ARN:password"
+
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
+      - echo Logging into DockerHub...
+      - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+      - echo Logging into Amazon ECR...
       - aws --version
       - aws ecr get-login-password | docker login --username AWS --password-stdin $REPOSITORY_URI
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
@@ -27,10 +34,6 @@ phases:
       - sed -i 's@AWS_REGION@'$AWS_REGION'@g' taskdef.json
       - echo update the roles in task definition...
       - sed -i 's@TASK_EXECUTION_ARN@'$TASK_EXECUTION_ARN'@g' taskdef.json
-      - echo update the task family name in task definition...
-      - sed -i 's@TASK_FAMILY@'$TASK_FAMILY'@g' taskdef.json
-      - echo update the container name in appspec.yaml...
-      - sed -i 's@TASK_FAMILY@'$TASK_FAMILY'@g' appspec.yaml
 artifacts:
   files:
     - "appspec.yaml"
