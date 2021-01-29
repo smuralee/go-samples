@@ -18,4 +18,3 @@ aws ecs register-task-definition --cli-input-json file://task-definition.json
 ## ENV variables needed for the CodeBuild
 * **REPOSITORY_URI** : ECR repository URI
 * **TASK_EXECUTION_ARN** : ECS task execution role
-* **TASK_FAMILY** : ECS task family name
