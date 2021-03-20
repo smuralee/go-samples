@@ -12,7 +12,6 @@ aws ecs register-task-definition --cli-input-json file://taskdef.json
 
 ## CodeBuild and CodeDeploy specifications
 * [buildspec.yml](buildspec.yml)
-* [appspec.yaml](appspec.yaml)
 * [taskdef.json](taskdef.json)
 
 ## ENV variables needed for the CodeBuild
