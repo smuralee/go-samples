@@ -6,4 +6,4 @@ Resources:
         TaskDefinition: "<TASK_DEFINITION>"
         LoadBalancerInfo:
           ContainerName: "books"
-          ContainerPort: 9000
+          ContainerPort: 8080
