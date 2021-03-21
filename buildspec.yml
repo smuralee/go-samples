@@ -31,13 +31,12 @@ phases:
       - sed -i 's@AWS_REGION@'$AWS_REGION'@g' taskdef.json
       - sed -i 's@TASK_EXECUTION_ARN@'$TASK_EXECUTION_ARN'@g' taskdef.json
       - echo Completed task definition update on `date`
-      - aws ecs register-task-definition --cli-input-json file://taskdef.json
-      - chmod 755 appspec.sh
-      - ./appspec.sh
   post_build:
     commands:
       - docker images
       - cat appspec.yaml
+      - cat taskdef.json
 artifacts:
   files:
     - "appspec.yaml"
+    - "taskdef.json"
