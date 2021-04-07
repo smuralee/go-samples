@@ -7,14 +7,14 @@
 
 ```
 # Register the task definition
-aws ecs register-task-definition --cli-input-json file://task-definition.json
+aws ecs register-task-definition --cli-input-json file://taskdef.json
 ```
 
 ## CodeBuild and CodeDeploy specifications
 * [buildspec.yml](buildspec.yml)
-* [appspec.yaml](appspec.yaml)
 * [taskdef.json](taskdef.json)
 
 ## ENV variables needed for the CodeBuild
-* **REPOSITORY_URI** : ECR repository URI
+* **AWS_REGION** : AWS Region
+* **ACCOUNT_ID** : AWS Account ID
 * **TASK_EXECUTION_ARN** : ECS task execution role

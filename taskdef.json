@@ -1,11 +1,31 @@
 {
   "containerDefinitions": [
     {
+      "name": "xray-daemon",
+      "image": "amazon/aws-xray-daemon",
+      "cpu": 32,
+      "memoryReservation": 256,
+      "portMappings": [
+        {
+          "containerPort": 2000,
+          "protocol": "udp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/books",
+          "awslogs-region": "AWS_REGION",
+          "awslogs-stream-prefix": "books"
+        }
+      }
+    },
+    {
       "name": "books",
       "image": "REPOSITORY_URI:IMAGE_TAG",
       "portMappings": [
         {
-          "containerPort": 9000,
+          "containerPort": 8080,
           "protocol": "tcp"
         }
       ],
