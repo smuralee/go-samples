@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: books
-  namespace: beta-apps
   labels:
     app: books
     env: development
