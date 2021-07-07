@@ -23,6 +23,12 @@
     {
       "name": "books",
       "image": "REPOSITORY_URI:IMAGE_TAG",
+      "environment": [
+        {
+          "name": "CODEGURU_ROLE",
+          "value": "CODEGURU_ROLE_ARN"
+        }
+      ],
       "portMappings": [
         {
           "containerPort": 8080,
