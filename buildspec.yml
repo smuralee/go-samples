@@ -24,7 +24,7 @@ phases:
       - aws ecr get-login-password | docker login --username AWS --password-stdin $REPOSITORY_URI
       - docker build -t $DOCKER_REPO:$IMAGE_TAG -t $REPOSITORY_URI:$IMAGE_TAG .
       - echo Completed container image built and tagging on `date`
-      - docker push $DOCKER_REPO:$IMAGE_TAG
+      - docker push $DOCKER_REPO:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Completed container image push on `date`
       - sed -i 's@REPOSITORY_URI@'$REPOSITORY_URI'@g' taskdef.json
