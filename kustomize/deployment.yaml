@@ -27,7 +27,7 @@ spec:
       serviceAccountName: docker-registry
       containers:
         - name: books
-          image: smuralee/books-api:beeb2c2
+          image: smuralee/books-api:e325f4e
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
