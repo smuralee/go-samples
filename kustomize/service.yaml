@@ -4,14 +4,16 @@ kind: Service
 metadata:
   name: books
   namespace: beta-apps
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
   labels:
     env: development
 spec:
   selector:
     app: books
-  type: ClusterIP
+  type: LoadBalancer
   ports:
-    - port: 80
+    - port: 8080
       targetPort: 8080
       protocol: TCP
 ---
