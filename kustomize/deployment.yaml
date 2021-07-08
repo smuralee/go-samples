@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books
+  namespace: beta-apps
+  labels:
+    app: books
+    env: development
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: books
+      env: development
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: books
+        env: development
+    spec:
+      serviceAccountName: docker-registry
+      containers:
+        - name: books
+          image: smuralee/books-api:beeb2c2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /books
+            initialDelaySeconds: 60
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "512m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1024m"
+---
