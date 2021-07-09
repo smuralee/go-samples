@@ -28,7 +28,7 @@ spec:
       containers:
         - name: books
           image: smuralee/books-api:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               protocol: TCP
